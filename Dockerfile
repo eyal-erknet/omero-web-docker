@@ -18,13 +18,24 @@ RUN ansible-galaxy install -p /opt/setup/roles -r requirements.yml \
     && dnf -y clean all \
     && rm -fr /var/cache
 
+COPY openssl-libs-1.1.1k-12.el8_9.aarch64.rpm /opt/setup/openssl-libs-1.1.1k-12.el8_9.aarch64.rpm
+RUN dnf -y install rpmdevtools && \
+    rpmdev-extract openssl-libs-1.1.1k-12.el8_9.aarch64.rpm && \
+    mv openssl-libs-1.1.1k-12.el8_9.aarch64/usr/lib64/* /usr/lib64 && \
+    rm -rf openssl-libs-1.1.1k-12.el8_9.aarch64 && \
+    rm openssl-libs-1.1.1k-12.el8_9.aarch64.rpm && \
+    dnf remove -y rpmdevtools && \
+    dnf -y clean all && \
+    rm -fr /var/cache
+
+
 RUN ansible-playbook playbook.yml -e 'ansible_python_interpreter=/usr/bin/python3' \
     && dnf -y clean all \
     && rm -fr /var/cache
 
 
 RUN curl -L -o /usr/local/bin/dumb-init \
-    https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 && \
+    https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_aarch64 && \
     chmod +x /usr/local/bin/dumb-init
 ADD entrypoint.sh /usr/local/bin/
 ADD 50-config.py 60-default-web-config.sh 98-cleanprevious.sh 99-run.sh /startup/

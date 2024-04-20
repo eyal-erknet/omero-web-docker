@@ -1,6 +1,6 @@
 - hosts: localhost
   roles:
-  - role: ome.omero_web
+  - role: omero_web-mod
   - role: ome.java
   vars:
     omero_web_systemd_setup: False

@@ -2,5 +2,5 @@
 - src: ome.java
   version: 2.2.0
 
-- name: ome.omero_web
-  version: 5.0.0
+- name: omero_web-mod
+  src: https://github.com/eyal-erknet/ansible-role-omero-web

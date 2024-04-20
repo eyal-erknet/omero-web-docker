@@ -1,4 +1,4 @@
-ARG PARENT_IMAGE=openmicroscopy/omero-web:latest
+ARG PARENT_IMAGE=omero-web-arm64:5.9.1
 FROM ${PARENT_IMAGE}
 MAINTAINER ome-devel@lists.openmicroscopy.org.uk
 
